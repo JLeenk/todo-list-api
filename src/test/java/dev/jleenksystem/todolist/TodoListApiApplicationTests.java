@@ -1,9 +1,11 @@
-package dev.jleenksystem.todo_list_api;
+package dev.jleenksystem.todolist;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class TodoListApiApplicationTests {
 
 	@Test
