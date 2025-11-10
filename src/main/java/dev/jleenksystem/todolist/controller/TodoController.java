@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import dev.jleenksystem.todolist.dto.TodoDto;
 import dev.jleenksystem.todolist.service.TodoService;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class TodoController {
 
     // POST /todos
     @PostMapping
-    public ResponseEntity<TodoDto> createTodo(@RequestBody TodoDto todo) {
+    public ResponseEntity<TodoDto> createTodo(@Valid @RequestBody TodoDto todo) {
         return ResponseEntity.status(HttpStatus.CREATED).body(todoService.create(todo));
     }
 

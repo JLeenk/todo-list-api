@@ -1,5 +1,8 @@
 package dev.jleenksystem.todolist.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import dev.jleenksystem.todolist.dto.TodoDto;
@@ -7,9 +10,6 @@ import dev.jleenksystem.todolist.exception.TodoNotFoundException;
 import dev.jleenksystem.todolist.mapper.TodoMapper;
 import dev.jleenksystem.todolist.model.Todo;
 import dev.jleenksystem.todolist.repository.TodoRepository;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TodoService {
@@ -36,8 +36,16 @@ public class TodoService {
 
     public TodoDto patch(Long id, TodoDto dto) {
         Todo existing = repo.findById(id).orElseThrow(() -> new TodoNotFoundException("Todo not found for update"));
-        existing.setDescription(dto.getDescription());
-        existing.setCompleted(dto.getCompleted());
+
+        // Apply only provided fields
+        if (dto.getDescription() != null) {
+            existing.setDescription(dto.getDescription());
+        }
+
+        if (dto.getCompleted() != null) {
+            existing.setCompleted(dto.getCompleted());
+        }
+
         repo.update(id, existing);
         return TodoMapper.toDto(existing);
     }
